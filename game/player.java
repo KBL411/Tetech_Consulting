@@ -59,13 +59,14 @@ public class player {
 		Territories = new ArrayList<Integer>();
 	}
 	
-	public void attackTerritory() {}
-	
-	public int rolldice(int Nb_dice) {
-		return 0;
+	public void attackTerritory() {
+		System.out.println("You Attack");
 	}
 	
+	public int rolldice(int Nb_dice) { return 0;}
+	
 	public int endTurn(int turn) {
+		System.out.println("You turns n°" + turn + " ends here");
 		return 0;
 	}
 	

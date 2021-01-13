@@ -38,8 +38,56 @@ public class Game {
         //To display the list
         //for (game.player player : joueurs) System.out.println(player);
 
-        //  Display the map
-        System.out.print("Bravo Chacal tu as un jeu avec " + NB_players + " joueurs.");
+        boolean Winner = false;
+        int turns = 0;
+        int action ;
+
+        while (!Winner){
+
+            for (game.player player : joueurs){
+
+                //reset the action variable
+                action = 0;
+                System.out.println(" ");System.out.println("Hello " + player.getName());
+
+                //We continue to play until the player decide to end his turn
+                while (action != 2){
+
+                    System.out.println(" ");
+                    System.out.println("1. Attack");
+                    System.out.println("2. END TURN");
+                    System.out.print("What you want to do : ");
+                    action = sc.nextInt();
+
+                    if(action == 1 ){
+
+                        player.attackTerritory();
+
+                    }
+                    else if(action == 2 ){
+
+                        player.endTurn(turns);
+
+                    }
+                    else{
+
+                        System.out.println(" ");System.out.println("Invalid selection");
+                        System.out.println("1.Attack");
+                        System.out.println("2. END TURN");
+                        System.out.print("Please enter a valid choice : ");
+                        action = sc.nextInt();
+
+                    }
+
+                }
+
+            }
+            turns++;
+
+        }
+        //  Display the map (manquante)
+
+
     }
 
 }
