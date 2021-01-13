@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class player {
 	private int ID;
@@ -59,14 +60,30 @@ public class player {
 		Territories = new ArrayList<Integer>();
 	}
 	
-	public void attackTerritory() {
+	public void attackTerritory(int Nb_dice) {
 		System.out.println("You Attack");
+		rolldice(Nb_dice);
+		//  Display the map (missing)
 	}
 	
-	public int rolldice(int Nb_dice) { return 0;}
+	public int rolldice(int Nb_dice) {
+		Random rand = new Random();
+		int tot = 0;
+		int temp;
+
+		for (int i = 0 ; i<Nb_dice ; i++){
+			temp = rand.nextInt(6) + 1;
+			tot += temp;
+		}
+
+
+		System.out.println("je retourne "+ tot);
+		return tot;
+	}
 	
 	public int endTurn(int turn) {
-		System.out.println("You turns n°" + turn + " ends here");
+		System.out.println("Your turns n°" + turn + " ends here");
+		//  Display the map (missing)
 		return 0;
 	}
 	

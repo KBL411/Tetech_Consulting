@@ -61,7 +61,7 @@ public class Game {
 
                     if(action == 1 ){
 
-                        player.attackTerritory();
+                        player.attackTerritory(3); //Nb_dice a remplacer par le nombre de dés sur sa case attaquant
 
                     }
                     else if(action == 2 ){
@@ -78,16 +78,9 @@ public class Game {
                         action = sc.nextInt();
 
                     }
-
                 }
-
             }
             turns++;
-
         }
-        //  Display the map (manquante)
-
-
     }
-
 }
