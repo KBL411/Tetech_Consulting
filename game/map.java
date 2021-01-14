@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -14,37 +15,49 @@ public class map {
 
 	private int[][] matrix;// in order to store the shape of the map
 
+	private int[][] matrix_player;
+	
 	private int nb_nomansland;
+	
+	private ArrayList<Integer> renfor = new ArrayList<Integer>();
+	private ArrayList<territory> already = new ArrayList<territory>();
 
 	// private int Nb_lac; // in order to store the number of supressed territory
 
 	public map(int nb_player) {
 		if (nb_player == 2) {
 			this.matrix = new int[5][5];
+			this.matrix_player = new int[5][5];
 			nb_nomansland = 5;
 		}
 		if (nb_player == 3) {
 			this.matrix = new int[6][6];
+			this.matrix_player = new int[6][6];
 			nb_nomansland = 6;
 		}
 		if (nb_player == 4) {
 			this.matrix = new int[7][7];
+			this.matrix_player = new int[7][7];
 			nb_nomansland = 9;
 		}
 		if (nb_player == 5) {
 			this.matrix = new int[8][8];
+			this.matrix_player = new int[8][8];
 			nb_nomansland = 14;
 		}
 		if (nb_player == 6) {
 			this.matrix = new int[8][8];
+			this.matrix_player = new int[8][8];
 			nb_nomansland = 4;
 		}
 		if (nb_player == 7) {
 			this.matrix = new int[9][9];
+			this.matrix_player = new int[9][9];
 			nb_nomansland = 11;
 		}
 		if (nb_player == 8) {
 			this.matrix = new int[9][9];
+			this.matrix_player = new int[9][9];
 			nb_nomansland = 1;
 
 		}
@@ -226,15 +239,54 @@ public class map {
 	}
 
 
-	public void reinforcement_dice(int id_player,ArrayList<player> players ) {
-		for (int i :players.get(id_player-1).getTerritories()) {
-			for (territory t : this.territory_list) {
-				if(t.getId()==i) {
-					
-				}
+	public void reinforcement_dice(int id_player,ArrayList<player> players) {
+		ArrayList<territory> ter = new ArrayList<territory>();
+		//ArrayList<territory> already = new ArrayList<territory>();
+		System.out.println("for the player: "+ id_player);
+		for( territory t : this.territory_list) {
+			if( t.getId_Player()==id_player) {
+				ter.add(t);
 			}
 		}
+		System.out.println(ter);
+		int renfor=0;
+		for(territory t : ter) {
+			renfor=1;
+			if(!this.already.contains(t)) {
+			this.neighbor(t,id_player, ter,renfor);}
+		}
+		
+		System.out.println("les dés de renfore sont au nombre de: "+Collections.max(this.renfor));
+		players.get(id_player-1).setNb_R_dice(Collections.max(this.renfor));
+		this.renfor.clear();
+		this.already.clear();
+		
 	}
+	
+	public void neighbor(territory t, int id_player,ArrayList<territory> ter, int renfor) {
+		/*if(this.already.size()==ter.size()) {
+			return renfor;
+		}*/
+		this.already.add(t);
+		System.out.println("from teritory: "+t.getId()+"\n already: "+this.already.size()+"\n ter: "+ter.size()+"\n renfor: "+ renfor);
+	
+		//ArrayList<territory> test = new ArrayList<territory>();
+		
+		for( territory to : ter) {
+			if(t.getNeighboring_Territories().contains(to.getId()) && !this.already.contains(to)) {
+				renfor = renfor+1;
+				
+				this.renfor.add(renfor);
+				this.neighbor(to, id_player,ter,renfor);
+				
+			}
+			
+		}
+		
+		
+	}
+	
+	
 
 	public void display_map() {
 		String matrix = "";
@@ -271,10 +323,12 @@ public class map {
 					for(player p : players)
 						if(p.getTerritories().contains(this.matrix[i][j])) {
 							matrix = matrix + " " + p.getID() + " || ";
+							this.matrix_player[i][j]=p.getID();
 						}
 						
 					if(this.matrix[i][j]==-1) {
 							matrix = matrix + " Ø || ";
+							this.matrix_player[i][j]=-1;
 						}
 
 			}
