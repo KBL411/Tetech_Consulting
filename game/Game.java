@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class game {
+public class Game {
     public static void main(String [] args) {
 
         // Input number of player
@@ -20,16 +20,14 @@ public class game {
 
         }
 
-        //  Initialization of the map (manquante)
 
-
-        //list of players
+        // List of players
         ArrayList<player> joueurs = new ArrayList<player>();
 
         //  Initialization of Players
         for (int i = 1; i <= NB_players; i++) {
 
-            System.out.print("Please enter a name for the player nÂ°" + i + " : ");
+            System.out.print("Please enter a name for the player n°" + i + " : ");
             String temp = sc.next();
             joueurs.add(new player(i, temp));
 
@@ -38,26 +36,32 @@ public class game {
         //To display the list
         //for (game.player player : joueurs) System.out.println(player);
 
-        boolean Winner = false;
-        int turns = 0;
-        int action ;
-        
+        //  Initialization of the map
         map map = new map(NB_players);
+
+        // Display the map
         map.display_map();
+
+        //
         map.add_player_to_territory(joueurs);
-        
+
         System.out.println(map.getterritory_list());
         for(player p : joueurs) {
-        System.out.println(p.getTerritories()+" length: "+p.getTerritories().size());
-        
-        
+
+            System.out.println(p.getTerritories()+" length: "+p.getTerritories().size());
+
         }
         map.add_dice_to_territory(joueurs);
         System.out.println(map.getterritory_list());
         //System.out.println("dé de renfor "+joueurs.get(0).getNb_R_dice()+" dé du joueur "+joueurs.get(0).getNb_dice());
-        
+
         map.display_map_player(joueurs);
-        
+
+
+        boolean Winner = false;
+        int turns = 0;
+        int action ;
+
         while (!Winner){
 
             for (player player : joueurs){
@@ -77,7 +81,7 @@ public class game {
 
                     if(action == 1 ){
 
-                        player.attackTerritory(3); //Nb_dice a remplacer par le nombre de dÃ©s sur sa case attaquant
+                        player.attackTerritory(player, map); //Nb_dice a remplacer par le nombre de dÃ©s sur sa case attaquant
 
                     }
                     else if(action == 2 ){

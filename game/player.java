@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class player {
 	private int ID;
@@ -69,10 +70,105 @@ public class player {
 		Territories = new ArrayList<Integer>();
 	}
 	
-	public void attackTerritory(int Nb_dice) {
+	public void attackTerritory(player p, map m) {
+
 		System.out.println("You Attack");
-		rolldice(Nb_dice);
-		//  Display the map (missing)
+
+		// 1. liste de tous les territoire du joueur
+		System.out.println(" ");
+		System.out.println("Below your territories");
+		System.out.println(p.getTerritories());
+		System.out.println(" ");
+
+		// 2. choix du territoire attaquant
+		Scanner choice = new Scanner(System.in);
+		int temp = 0;
+		territory terr_att = null;
+
+		do{
+
+			System.out.print("With wich territory do you want to make an attack :");
+			temp = choice.nextInt();
+
+		}while(!p.getTerritories().contains(temp));// tant que le territoire choisi appartient bien a la liste
+
+
+		for(int i = 0 ; i < m.getterritory_list().size(); i++){
+			//On retrouve le territoire depuis son ID en parcourant la liste de tt les territoires
+			territory temp_terr = m.getterritory_list().get(i);
+
+			if( temp_terr.getId() == temp) {
+
+				terr_att = temp_terr;
+
+			}
+		}
+
+		// 3. liste territoire adjacent au territoire attaquant selectionné
+		System.out.println(" ");
+		System.out.println("Below the territories that you can attack from your chosen territory");
+		ArrayList<Integer> att_neighb = terr_att.getNeighboring_Territories(); // Neighbors - Our territories
+		att_neighb.removeAll(p.getTerritories()); //On enleve tout nos territoires pour eviter de pouvoir les attaquer
+		System.out.print(att_neighb);
+
+
+		// 4. Choix du territoire attaqué
+		temp = 0;
+		territory terr_def = null;
+		int attack, defense;
+
+		if(att_neighb.isEmpty()){ // Si il n'y a pas d'attaque possible on ne propose meme pas la selection
+			System.out.println(" ");
+			System.out.print("No territories can be attack from here");
+			System.out.println(" ");
+		}else {
+			do{
+
+				System.out.println("With which territory do you want to attack :");
+				temp = choice.nextInt();
+
+			}while(!att_neighb.contains(temp)); // tant que le territoire choisi appartient bien a la liste
+
+
+			for(int i = 0 ; i < m.getterritory_list().size(); i++){
+				//On retrouve le territoire depuis son ID en parcourant la liste de tt les territoires.
+				territory temp_terr = m.getterritory_list().get(i);
+
+				if( temp_terr.getId() == temp) {
+
+					terr_def = temp_terr;
+
+				}
+			}
+
+
+			// 5. On récupere les nombres de dés des territoires et on fait un rolldice pour chaque
+			attack = rolldice(terr_att.getNb_Dice());
+			defense = rolldice(terr_def.getNb_Dice());
+
+			// 6. on effectue les actions (a faire)
+			if(attack > defense){
+
+				System.out.print("l'attaque reussi " + attack + "/" + defense);
+				System.out.print(" ");
+
+
+			}else if (attack < defense){
+
+				System.out.print("l'attaque echoue"+ attack + "/" + defense);
+				System.out.print(" ");
+
+
+			}else{
+
+				System.out.print("egalite bande de boloss"+ attack + "/" + defense);
+				System.out.print(" ");
+
+			}
+
+			// 7. Affichage de la nouvelle map (a faire)
+		}
+
 	}
 	
 	public int rolldice(int Nb_dice) {
@@ -85,17 +181,14 @@ public class player {
 			tot += temp;
 		}
 
-
-		System.out.println("je retourne "+ tot);
 		return tot;
 	}
 	
 	public int endTurn(int turn) {
-		System.out.println("Your turns n°" + turn + " ends here");
+		System.out.println("Your turns n" + turn + " ends here");
 		//  Display the map (missing)
 		return 0;
 	}
 	
 
-	
 }
