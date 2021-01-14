@@ -101,6 +101,10 @@ public class Game {
                 }
             }
             turns++;
+            System.out.println(" ");
+            System.out.println("-----------------------NEW TURN (turn : " + turns + ")---------------------------");
+            System.out.println(" ");
+
         }
     }
 }

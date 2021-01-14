@@ -109,7 +109,7 @@ public class player {
 		System.out.println("Below the territories that you can attack from your chosen territory");
 		ArrayList<Integer> att_neighb = terr_att.getNeighboring_Territories(); // Neighbors - Our territories
 		att_neighb.removeAll(p.getTerritories()); //On enleve tout nos territoires pour eviter de pouvoir les attaquer
-		System.out.print(att_neighb);
+		System.out.println(att_neighb);
 
 
 		// 4. Choix du territoire attaqué
@@ -124,7 +124,7 @@ public class player {
 		}else {
 			do{
 
-				System.out.println("With which territory do you want to attack :");
+				System.out.print("With which territory do you want to attack :");
 				temp = choice.nextInt();
 
 			}while(!att_neighb.contains(temp)); // tant que le territoire choisi appartient bien a la liste
@@ -149,20 +149,20 @@ public class player {
 			// 6. on effectue les actions (a faire)
 			if(attack > defense){
 
-				System.out.print("l'attaque reussi " + attack + "/" + defense);
-				System.out.print(" ");
+				System.out.println("l'attaque reussi " + attack + "/" + defense);
+				System.out.println(" ");
 
 
 			}else if (attack < defense){
 
-				System.out.print("l'attaque echoue"+ attack + "/" + defense);
-				System.out.print(" ");
+				System.out.println("l'attaque echoue"+ attack + "/" + defense);
+				System.out.println(" ");
 
 
 			}else{
 
-				System.out.print("egalite bande de boloss"+ attack + "/" + defense);
-				System.out.print(" ");
+				System.out.println("egalite bande de boloss"+ attack + "/" + defense);
+				System.out.println(" ");
 
 			}
 
