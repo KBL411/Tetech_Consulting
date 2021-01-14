@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Game {
+public class game {
     public static void main(String [] args) {
 
         // Input number of player
@@ -41,10 +41,26 @@ public class Game {
         boolean Winner = false;
         int turns = 0;
         int action ;
-
+        
+        map map = new map(NB_players);
+        map.display_map();
+        map.add_player_to_territory(joueurs);
+        
+        System.out.println(map.getterritory_list());
+        for(player p : joueurs) {
+        System.out.println(p.getTerritories()+" length: "+p.getTerritories().size());
+        
+        
+        }
+        map.add_dice_to_territory(joueurs);
+        System.out.println(map.getterritory_list());
+        //System.out.println("dé de renfor "+joueurs.get(0).getNb_R_dice()+" dé du joueur "+joueurs.get(0).getNb_dice());
+        
+        map.display_map_player(joueurs);
+        
         while (!Winner){
 
-            for (game.player player : joueurs){
+            for (player player : joueurs){
 
                 //reset the action variable
                 action = 0;

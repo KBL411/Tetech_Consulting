@@ -7,7 +7,8 @@ public class player {
 	private int ID;
 	private String Name;
 	private ArrayList<Integer> Territories;
-	private int Nb_dice;
+	private int Nb_dice=10;
+	private int Nb_R_dice=10;
 	
 	public String getName() {
 		return Name;
@@ -40,6 +41,14 @@ public class player {
 
 	public void setNb_dice(int nb_dice) {
 		Nb_dice = nb_dice;
+	}
+	
+	public int getNb_R_dice() {
+		return Nb_R_dice;
+	}
+
+	public void setNb_R_dice(int nb_R_dice) {
+		Nb_R_dice = nb_R_dice;
 	}
 
 	@Override

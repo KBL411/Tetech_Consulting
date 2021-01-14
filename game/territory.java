@@ -23,6 +23,12 @@ public class territory {
 		Id = id;
 	}
 	
+	public territory(int id,ArrayList<Integer> neighbor) {
+		super();
+		Id = id;
+		this.Neighboring_Territories = neighbor;
+	}
+	
 
 	public int getId() {
 		return Id;

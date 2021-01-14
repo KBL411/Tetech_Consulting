@@ -9,7 +9,8 @@ public class map {
 	private ArrayList<territory> territory_list = new ArrayList<territory>(); // in order to store the map of the object
 	// territory
 
-	private ArrayList<player> players = new ArrayList<player>(); // in order to store the player
+	// private ArrayList<player> players = new ArrayList<player>(); // in order to
+	// store the player
 
 	private int[][] matrix;// in order to store the shape of the map
 
@@ -166,20 +167,73 @@ public class map {
 				}
 			}
 		}
-		
 
-		for(int i : list_of_id_teritory) {
-			this.territory_list.add(new territory(i,boundaries.get(i)));
+		for (int i : list_of_id_teritory) {
+			System.out.println(boundaries.get(i));
+			while (boundaries.get(i).contains(-1)) {
+				boundaries.get(i).remove(boundaries.get(i).indexOf(-1));
+			}
+			System.out.println(boundaries.get(i));
+			this.territory_list.add(new territory(i, boundaries.get(i)));
 		}
 	}
 
-	public void add_player_to_territory(int Nb_player) {
+	public void add_player_to_territory(ArrayList<player> players) {
+		ArrayList<Integer> memory = new ArrayList<Integer>();
+
+		for (player p : players) {
+			int mem = 10;
+			while (mem > 0) {
+				int x = new Random().nextInt(players.size() * 10);
+				if (!memory.contains(x)) {
+					memory.add(x);
+					this.territory_list.get(x).setId_Player(p.getID());
+					ArrayList<Integer> change = p.getTerritories();
+					change.add(this.territory_list.get(x).getId());
+					p.setTerritories(change);
+					mem = mem - 1;
+				}
+			}
+		}
+
 	}
 
-	public void add_dice_to_territory() {
+	public void add_dice_to_territory(ArrayList<player> players) {
+		
+		for (territory t : this.territory_list) {
+			if(t.getNb_Dice()==0) {
+			t.setNb_Dice(t.getNb_Dice()+1);}
+		}
+		
+
+		for (player p : players) {
+			int cpt = p.getNb_R_dice();
+			while (cpt > 0) {
+				int x = new Random().nextInt(p.getTerritories().size() - 1);
+				int y = p.getTerritories().get(x);
+				for (territory t : this.territory_list) {
+					if (t.getId() == y && t.getNb_Dice() < 8) {
+						t.setNb_Dice(t.getNb_Dice() + 1);
+						cpt = cpt - 1;
+					}
+				}
+
+			}
+			p.setNb_dice(p.getNb_dice()+p.getNb_R_dice());
+			p.setNb_R_dice(0);
+		}
+
 	}
 
-	public void reinforcement_dice(int id_player) {
+
+	public void reinforcement_dice(int id_player,ArrayList<player> players ) {
+		for (int i :players.get(id_player-1).getTerritories()) {
+			for (territory t : this.territory_list) {
+				if(t.getId()==i) {
+					
+				}
+			}
+		}
 	}
 
 	public void display_map() {
@@ -189,30 +243,42 @@ public class map {
 
 				if (j != this.matrix.length - 1) {
 
-					if (this.matrix[i][j] == (this.matrix[i][j + 1])) {
-						if (this.matrix[i][j] < 10) {
-							matrix = matrix + this.matrix[i][j] + "###";
+					if (this.matrix[i][j] < 10 && this.matrix[i][j] != -1) {
+						matrix = matrix + " " + this.matrix[i][j] + " || ";
 
-						} else {
-							matrix = matrix + this.matrix[i][j] + "##";
-						}
 					} else {
-						if (this.matrix[i][j] < 10) {
-							matrix = matrix + this.matrix[i][j] + "   ";
-
-						} else {
-							matrix = matrix + this.matrix[i][j] + "  ";
-						}
-
+						matrix = matrix + this.matrix[i][j] + " || ";
 					}
 
-				} else {
+				}
+
+				else {
 
 					matrix = matrix + this.matrix[i][j];
 				}
 
 			}
-			matrix = matrix + "\n                                \n";
+			matrix = matrix + "\n------------------------------\n";
+		}
+
+		System.out.println(matrix);
+	}
+	
+	public void display_map_player(ArrayList<player> players) {
+		String matrix = "";
+		for (int i = 0; i < this.matrix.length; i++) {
+			for (int j = 0; j < this.matrix.length; j++) {
+					for(player p : players)
+						if(p.getTerritories().contains(this.matrix[i][j])) {
+							matrix = matrix + " " + p.getID() + " || ";
+						}
+						
+					if(this.matrix[i][j]==-1) {
+							matrix = matrix + " Ø || ";
+						}
+
+			}
+			matrix = matrix + "\n------------------------------\n";
 		}
 
 		System.out.println(matrix);
@@ -226,13 +292,11 @@ public class map {
 		this.territory_list = territory_list;
 	}
 
-	public ArrayList<player> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(ArrayList<player> players) {
-		this.players = players;
-	}
+	/*
+	 * public ArrayList<player> getPlayers() { return players; }
+	 * 
+	 * public void setPlayers(ArrayList<player> players) { this.players = players; }
+	 */
 
 	public int[][] getMatrix() {
 		return matrix;
