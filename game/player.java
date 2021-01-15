@@ -141,32 +141,37 @@ public class player {
 				}
 			}
 
-
 			// 5. On récupere les nombres de dés des territoires et on fait un rolldice pour chaque
 			attack = rolldice(terr_att.getNb_Dice());
 			defense = rolldice(terr_def.getNb_Dice());
 
-			// 6. on effectue les actions (a faire)
+			// 6. on effectue les actions
 			if(attack > defense){
+				//attacker moves his dice to the conquered territory, except one that
+				//remains on the starting territory and the defeated dice of the opponent disappears
 
-				System.out.println("l'attaque reussi " + attack + "/" + defense);
+				terr_def.setId_Player(p.getID()); //changer l'appartenance du territoire
+				terr_def.setNb_Dice(terr_att.getNb_Dice()-1);
+				terr_att.setNb_Dice(1);
+
+				System.out.println("Attack succeed,  Score : " + attack + " / " + defense);
 				System.out.println(" ");
-
 
 			}else if (attack < defense){
-
-				System.out.println("l'attaque echoue"+ attack + "/" + defense);
+				// (attacker) only keeps one die in his territory and the attacked territory remains unchanged
+				terr_att.setNb_Dice(1);
+				System.out.println("Attack failed,  Score : " + attack + " / " + defense);
 				System.out.println(" ");
 
-
 			}else{
-
-				System.out.println("egalite bande de boloss"+ attack + "/" + defense);
+				terr_att.setNb_Dice(1);
+				terr_def.setNb_Dice(1);
+				System.out.println("It's a draw, Score : " + attack + " / " + defense);
 				System.out.println(" ");
 
 			}
 
-			// 7. Affichage de la nouvelle map (a faire)
+			// 7. Display the new map (in the Game/Main file)
 		}
 
 	}

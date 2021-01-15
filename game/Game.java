@@ -81,7 +81,12 @@ public class Game {
 
                     if(action == 1 ){
 
-                        player.attackTerritory(player, map); //Nb_dice a remplacer par le nombre de dés sur sa case attaquant
+                        player.attackTerritory(player, map);
+                        System.out.println(" ");
+                        System.out.println("--------------------------THE NEW MAP---------------------------");
+                        System.out.println(" ");
+
+                        map.display_map_player(joueurs);
 
                     }
                     else if(action == 2 ){
