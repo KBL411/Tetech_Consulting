@@ -22,9 +22,9 @@ public class map {
 	private ArrayList<Integer> renfor = new ArrayList<Integer>();
 	private ArrayList<territory> already = new ArrayList<territory>();
 
-	// private int Nb_lac; // in order to store the number of supressed territory
+	
 
-	public map(int nb_player) {
+	public map(int nb_player) { // we creat a matrix with at least 10 territory for eache player then we will kill the other territorys
 		if (nb_player == 2) {
 			this.matrix = new int[5][5];
 			this.matrix_player = new int[5][5];
@@ -64,13 +64,13 @@ public class map {
 		int cpt = 0;
 		for (int i = 0; i <= matrix.length - 1; i++) {
 			for (int j = 0; j <= matrix.length - 1; j++) {
-				cpt = cpt + 1;
+				cpt = cpt + 1;								// wa hade a différent numbre for each teritory
 				matrix[i][j] = cpt;
 			}
 		}
 
 		while (nb_nomansland > 0) {
-			int x = new Random().nextInt(matrix.length - 1);
+			int x = new Random().nextInt(matrix.length - 1);		// we creat some random nomansland
 			int y = new Random().nextInt(matrix.length - 1);
 			if (this.matrix[x][y] != -1) {
 				this.matrix[x][y] = -1;
@@ -87,16 +87,16 @@ public class map {
 				if (matrix[i][j] != -1) {
 					list_of_id_teritory.add(matrix[i][j]);
 
-					if (j == 0 && i == 0) { // if we are at the top left corner we only check on the right side the down
-											// side and on the Right down diagonal 0# like this
+					if (j == 0 && i == 0) { // if we are at the top left corner we only check on the right side the downside
+											
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[0][1]);
 						tab1.add(matrix[1][0]);
 						boundaries.put(matrix[i][j], tab1);
 
 					}
-					if (j == 0 && i == matrix.length - 1) { // if we are at the top right corner we only check like this
-															// #0
+					if (j == 0 && i == matrix.length - 1) { // if we are at the top right corner we only check the left side and the down side
+															
 
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[matrix.length - 2][0]);
@@ -105,8 +105,8 @@ public class map {
 
 					}
 
-					if (i == 0 && j == matrix.length - 1) { // if we are at the down left corner we on ly check like
-															// this ##
+					if (i == 0 && j == matrix.length - 1) { // if we are at the down left corner we on ly check the up side and right side
+															
 
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[0][matrix.length - 2]);
@@ -115,8 +115,8 @@ public class map {
 
 					}
 
-					if (i == matrix.length - 1 && j == matrix.length - 1) { // if we are at the down right corner we on
-																			// ly check like this ##
+					if (i == matrix.length - 1 && j == matrix.length - 1) { // if we are at the down right corner we only check up side and left side
+																			
 
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 
@@ -125,11 +125,9 @@ public class map {
 						boundaries.put(matrix[i][j], tab1);
 
 					}
-//                                                                                                                                                     ___
-					if (j == 0 && i > 0 && i < matrix.length - 1) { // if we are on edge we have four check for the four
-																	// edge of the matrix #0#, ###, |##, ##| zone where
-																	// we check: #, the case of the proper teritory: 0,
-																	// border of the matrix |or¯or_
+
+					if (j == 0 && i > 0 && i < matrix.length - 1) { // if we are on the up edge we check right side , left side and down side
+																
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[i - 1][j]);
 						tab1.add(matrix[i + 1][j]);
@@ -137,7 +135,7 @@ public class map {
 						boundaries.put(matrix[i][j], tab1);
 
 					}
-					if (i == 0 && j > 0 && j < matrix.length - 1) {
+					if (i == 0 && j > 0 && j < matrix.length - 1) { // if we are on the left edge we check right side , up side and down side
 
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[i][j - 1]);
@@ -146,7 +144,7 @@ public class map {
 						boundaries.put(matrix[i][j], tab1);
 
 					}
-					if (j == matrix.length - 1 && i > 0 && i < matrix.length - 1) {
+					if (j == matrix.length - 1 && i > 0 && i < matrix.length - 1) { // if we are on the right edge we check up side , left side and down side
 
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[i - 1][j]);
@@ -155,7 +153,7 @@ public class map {
 						boundaries.put(matrix[i][j], tab1);
 
 					}
-					if (i == matrix.length - 1 && j > 0 && j < matrix.length - 1) {
+					if (i == matrix.length - 1 && j > 0 && j < matrix.length - 1) { // if we are on the udown edge we check right side , left side and up side
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[i][j - 1]);
 						tab1.add(matrix[i][j + 1]);
@@ -163,11 +161,9 @@ public class map {
 						boundaries.put(matrix[i][j], tab1);
 
 					}
-//																																											###
-					if (i > 0 && j > 0 && i < matrix.length - 1 && j < matrix.length - 1) { // if we are not on the edge
-																							// of the matrix we can
-																							// check all over the box
-																							// like this #0#
+					
+					if (i > 0 && j > 0 && i < matrix.length - 1 && j < matrix.length - 1) { // else we check all the side
+						
 						ArrayList<Integer> tab1 = new ArrayList<Integer>();
 						tab1.add(matrix[i - 1][j]);
 						tab1.add(matrix[i + 1][j]);
@@ -183,7 +179,7 @@ public class map {
 
 		for (int i : list_of_id_teritory) {
 			System.out.println(boundaries.get(i));
-			while (boundaries.get(i).contains(-1)) {
+			while (boundaries.get(i).contains(-1)) {// we clean all the boundaries for no possibility to go in -1 territory
 				boundaries.get(i).remove(boundaries.get(i).indexOf(-1));
 			}
 			System.out.println(boundaries.get(i));
@@ -191,13 +187,13 @@ public class map {
 		}
 	}
 
-	public void add_player_to_territory(ArrayList<player> players) {
+	public void add_player_to_territory(ArrayList<player> players) {  // in order to dispatch player on the map
 		ArrayList<Integer> memory = new ArrayList<Integer>();
 
-		for (player p : players) {
-			int mem = 10;
-			while (mem > 0) {
-				int x = new Random().nextInt(players.size() * 10);
+		for (player p : players) {										
+			int mem = 10;												// each player has 10 territory
+			while (mem > 0) {												
+				int x = new Random().nextInt(players.size() * 10);				// we provide terriotry randomly
 				if (!memory.contains(x)) {
 					memory.add(x);
 					this.territory_list.get(x).setId_Player(p.getID());
@@ -211,15 +207,15 @@ public class map {
 
 	}
 
-	public void add_dice_to_territory(ArrayList<player> players) {
+	public void add_dice_to_territory(ArrayList<player> players) { //in order to add dice on the territory of the map
 		
-		for (territory t : this.territory_list) {
+		for (territory t : this.territory_list) {// if a territory has no dice he recieve on
 			if(t.getNb_Dice()==0) {
 			t.setNb_Dice(t.getNb_Dice()+1);}
 		}
 		
 
-		for (player p : players) {
+		for (player p : players) {				// for each player we check their terriotrys and add dice randomly one by one until we reach the limite of dice
 			int cpt = p.getNb_R_dice();
 			while (cpt > 0) {
 				int x = new Random().nextInt(p.getTerritories().size() - 1);
@@ -243,22 +239,22 @@ public class map {
 		ArrayList<territory> ter = new ArrayList<territory>();
 		//ArrayList<territory> already = new ArrayList<territory>();
 		System.out.println("for the player: "+ id_player);
-		for( territory t : this.territory_list) {
+		for( territory t : this.territory_list) { 
 			if( t.getId_Player()==id_player) {
-				ter.add(t);
+				ter.add(t);							// we add to ter all the territory of the current player
 			}
 		}
 		System.out.println(ter);
 		int renfor=0;
-		for(territory t : ter) {
+		for(territory t : ter) {					// we iterate all the teritory of the current player
 			renfor=1;
-			if(!this.already.contains(t)) {
-			this.neighbor(t,id_player, ter,renfor);}
+			if(!this.already.contains(t)) {				// we check if the teritory as been already check
+			this.neighbor(t,id_player, ter,renfor);}	// if not we call neighbor methode
 		}
 		
-		System.out.println("les dés de renfore sont au nombre de: "+Collections.max(this.renfor));
-		players.get(id_player-1).setNb_R_dice(Collections.max(this.renfor));
-		this.renfor.clear();
+		System.out.println("les dés de renfore sont au nombre de: "+Collections.max(this.renfor));  // we take the maximum of renfor and this is the greatest number of contigous territory
+		players.get(id_player-1).setNb_R_dice(Collections.max(this.renfor));						// we set to the player the numbre of his bonus dice
+		this.renfor.clear();																		// we clear for the next time
 		this.already.clear();
 		
 	}
@@ -267,17 +263,17 @@ public class map {
 		/*if(this.already.size()==ter.size()) {
 			return renfor;
 		}*/
-		this.already.add(t);
+		this.already.add(t);																		// we add the territory to the list already to keep it in memory
 		System.out.println("from teritory: "+t.getId()+"\n already: "+this.already.size()+"\n ter: "+ter.size()+"\n renfor: "+ renfor);
 	
 		//ArrayList<territory> test = new ArrayList<territory>();
 		
-		for( territory to : ter) {
-			if(t.getNeighboring_Territories().contains(to.getId()) && !this.already.contains(to)) {
-				renfor = renfor+1;
+		for( territory to : ter) {																	// we iterate the territory of the player
+			if(t.getNeighboring_Territories().contains(to.getId()) && !this.already.contains(to)) {  // we check if the territories touche another territories and if is not counted before
+				renfor = renfor+1;																	
 				
-				this.renfor.add(renfor);
-				this.neighbor(to, id_player,ter,renfor);
+				this.renfor.add(renfor);															// we add the number of reiforcemnet to the list renfor
+				this.neighbor(to, id_player,ter,renfor);											// we call neighbor ofr the contigous teriroiry
 				
 			}
 			
@@ -288,7 +284,7 @@ public class map {
 	
 	
 
-	public void display_map() {
+	public void display_map() {// in order to display the map
 		String matrix = "";
 		for (int i = 0; i < this.matrix.length; i++) {
 			for (int j = 0; j < this.matrix.length; j++) {
@@ -316,7 +312,7 @@ public class map {
 		System.out.println(matrix);
 	}
 	
-	public void display_map_player(ArrayList<player> players) {
+	public void display_map_player(ArrayList<player> players) { // we display the matrix but we replace the id of the territory by the id of the owner
 		String matrix = "";
 		for (int i = 0; i < this.matrix.length; i++) {
 			for (int j = 0; j < this.matrix.length; j++) {
