@@ -150,7 +150,12 @@ public class player {
 				//attacker moves his dice to the conquered territory, except one that
 				//remains on the starting territory and the defeated dice of the opponent disappears
 
-				terr_def.setId_Player(p.getID()); //changer l'appartenance du territoire
+				terr_def.setId_Player(terr_att.getId_Player()); //changer l'appartenance du territoire
+
+				/////////////////////////////////////////////////////////////////////////////////////////////////////
+				System.out.println("TEST, terr def (id : " + terr_def.getId() + ") appartient maintenant a : " + terr_def.getId_Player());
+				/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 				terr_def.setNb_Dice(terr_att.getNb_Dice()-1);
 				terr_att.setNb_Dice(1);
 
