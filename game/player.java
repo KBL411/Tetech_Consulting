@@ -34,7 +34,6 @@ public class player {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	
 
 	public int getNb_dice() {
 		return Nb_dice;
@@ -104,80 +103,91 @@ public class player {
 			}
 		}
 
-		// 3. liste territoire adjacent au territoire attaquant selectionné
-		System.out.println(" ");
-		System.out.println("Below the territories that you can attack from your chosen territory");
-		ArrayList<Integer> att_neighb = terr_att.getNeighboring_Territories(); // Neighbors - Our territories
-		att_neighb.removeAll(p.getTerritories()); //On enleve tout nos territoires pour eviter de pouvoir les attaquer
-		System.out.println(att_neighb);
+		//If the attack territory just have one dice the attack connot be reached
+		if(terr_att.getNb_Dice() == 1){
 
-
-		// 4. Choix du territoire attaqué
-		temp = 0;
-		territory terr_def = null;
-		int attack, defense;
-
-		if(att_neighb.isEmpty()){ // Si il n'y a pas d'attaque possible on ne propose meme pas la selection
 			System.out.println(" ");
-			System.out.print("No territories can be attack from here");
+			System.out.print("You cannot attack from here, you just have one dice");
 			System.out.println(" ");
+
 		}else {
-			do{
 
-				System.out.print("With which territory do you want to attack :");
-				temp = choice.nextInt();
+			// 3. liste territoire adjacent au territoire attaquant selectionné
+			System.out.println(" ");
+			System.out.println("Below the territories that you can attack from your chosen territory");
+			ArrayList<Integer> att_neighb = terr_att.getNeighboring_Territories(); // Neighbors - Our territories
+			att_neighb.removeAll(p.getTerritories()); //On enleve tout nos territoires pour eviter de pouvoir les attaquer
+			System.out.println(att_neighb);
 
-			}while(!att_neighb.contains(temp)); // tant que le territoire choisi appartient bien a la liste
+
+			// 4. Choix du territoire attaqué
+			temp = 0;
+			territory terr_def = null;
+			int attack, defense;
+
+			if(att_neighb.isEmpty()){ // Si il n'y a pas d'attaque possible on ne propose meme pas la selection
+				System.out.println(" ");
+				System.out.print("No territories can be attack from here");
+				System.out.println(" ");
+			}else {
+				do{
+
+					System.out.print("With which territory do you want to attack :");
+					temp = choice.nextInt();
+
+				}while(!att_neighb.contains(temp)); // tant que le territoire choisi appartient bien a la liste
 
 
-			for(int i = 0 ; i < m.getterritory_list().size(); i++){
-				//On retrouve le territoire depuis son ID en parcourant la liste de tt les territoires.
-				territory temp_terr = m.getterritory_list().get(i);
+				for(int i = 0 ; i < m.getterritory_list().size(); i++){
+					//On retrouve le territoire depuis son ID en parcourant la liste de tt les territoires.
+					territory temp_terr = m.getterritory_list().get(i);
 
-				if( temp_terr.getId() == temp) {
+					if( temp_terr.getId() == temp) {
 
-					terr_def = temp_terr;
+						terr_def = temp_terr;
+
+					}
+				}
+
+				// 5. On récupere les nombres de dés des territoires et on fait un rolldice pour chaque
+				attack = rolldice(terr_att.getNb_Dice());
+				defense = rolldice(terr_def.getNb_Dice());
+
+				// 6. on effectue les actions
+				if(attack > defense){
+					//attacker moves his dice to the conquered territory, except one that
+					//remains on the starting territory and the defeated dice of the opponent disappears
+
+					terr_def.setId_Player(terr_att.getId_Player()); //changer l'appartenance du territoire
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////
+					System.out.println("TEST, terr def (id : " + terr_def.getId() + ") appartient maintenant a : " + terr_def.getId_Player());
+					/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					terr_def.setNb_Dice(terr_att.getNb_Dice()-1);
+					terr_att.setNb_Dice(1);
+
+					System.out.println("Attack succeed,  Score : " + attack + " / " + defense);
+					System.out.println(" ");
+
+				}else if (attack < defense){
+					// (attacker) only keeps one die in his territory and the attacked territory remains unchanged
+					terr_att.setNb_Dice(1);
+					System.out.println("Attack failed,  Score : " + attack + " / " + defense);
+					System.out.println(" ");
+
+				}else{
+					terr_att.setNb_Dice(1);
+					terr_def.setNb_Dice(1);
+					System.out.println("It's a draw, Score : " + attack + " / " + defense);
+					System.out.println(" ");
 
 				}
+
+				// 7. Display the new map (in the Game/Main file)
 			}
-
-			// 5. On récupere les nombres de dés des territoires et on fait un rolldice pour chaque
-			attack = rolldice(terr_att.getNb_Dice());
-			defense = rolldice(terr_def.getNb_Dice());
-
-			// 6. on effectue les actions
-			if(attack > defense){
-				//attacker moves his dice to the conquered territory, except one that
-				//remains on the starting territory and the defeated dice of the opponent disappears
-
-				terr_def.setId_Player(terr_att.getId_Player()); //changer l'appartenance du territoire
-
-				/////////////////////////////////////////////////////////////////////////////////////////////////////
-				System.out.println("TEST, terr def (id : " + terr_def.getId() + ") appartient maintenant a : " + terr_def.getId_Player());
-				/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-				terr_def.setNb_Dice(terr_att.getNb_Dice()-1);
-				terr_att.setNb_Dice(1);
-
-				System.out.println("Attack succeed,  Score : " + attack + " / " + defense);
-				System.out.println(" ");
-
-			}else if (attack < defense){
-				// (attacker) only keeps one die in his territory and the attacked territory remains unchanged
-				terr_att.setNb_Dice(1);
-				System.out.println("Attack failed,  Score : " + attack + " / " + defense);
-				System.out.println(" ");
-
-			}else{
-				terr_att.setNb_Dice(1);
-				terr_def.setNb_Dice(1);
-				System.out.println("It's a draw, Score : " + attack + " / " + defense);
-				System.out.println(" ");
-
-			}
-
-			// 7. Display the new map (in the Game/Main file)
 		}
+
 
 	}
 	

@@ -12,14 +12,13 @@ public class Game {
         int NB_players = sc.nextInt();
 
         // Checking
-        while(NB_players > 8 || NB_players == 0){
+        while(NB_players > 8 || NB_players < 1){
 
             System.out.println(" ");System.out.println("Invalid number of players");
             System.out.print("Please enter a valid number of players : ");
             NB_players = sc.nextInt();
 
         }
-
 
         // List of players
         ArrayList<player> joueurs = new ArrayList<player>();
