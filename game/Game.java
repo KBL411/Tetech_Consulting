@@ -58,9 +58,17 @@ public class Game {
         		asking=false;
         	}
         	else if(choice == 2) {
-        		asking=false;
+        		System.out.println("vous avez choisi une carte créer a partir d'un fichier csv soyez bien sur que votre map sois conforme a votre nombre de joueurs \nsi tous est bon taper 1 sinon taper 2 pour retourner au menu précédent");
+        		int choice2 = sc.nextInt();
+        		if(choice2==1) {
+        			map = new map(NB_players, true);
+            		asking=false;
+        			
+        		}
+        		System.out.println("would you use a random map(1). Or a map build for a csv file(2) ?");
         		
-        		map = new map(NB_players, true);
+        		
+        		
         	}
         	
         }
