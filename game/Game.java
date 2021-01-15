@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+	
+	private static map map;
+	
     public static void main(String [] args) {
 
         // Input number of player
@@ -12,10 +15,10 @@ public class Game {
         int NB_players = sc.nextInt();
 
         // Checking
-        while(NB_players > 8 || NB_players <= 1){
+        while(NB_players > 8 || NB_players < 1){
 
             System.out.println(" ");System.out.println("Invalid number of players");
-            System.out.print("Please enter a valid number of players ( between 2 and 8 ) : ");
+            System.out.print("Please enter a valid number of players : ");
             NB_players = sc.nextInt();
 
         }
@@ -34,28 +37,33 @@ public class Game {
 
         //To display the list
         //for (game.player player : joueurs) System.out.println(player);
+        boolean asking = true;
+        System.out.println("would you use a random map(1). Or a map build for a csv file(2) ?");
+        while(asking) {
+        	int choice = sc.nextInt();
+        	if(choice == 1) {
 
-        //  Initialization of the map
-        map map = new map(NB_players);
+                //  Initialization of the map
+                map = new map(NB_players);
 
-        // Display the map
-        map.display_map();
+                // Display the map
+                map.display_map();
 
-        //
-        map.add_player_to_territory(joueurs);
-
-        System.out.println(map.getterritory_list());
-        for(player p : joueurs) {
-
-            System.out.println(p.getTerritories()+" length: "+p.getTerritories().size());
-
+                //
+                map.add_player_to_territory(joueurs);
+                //System.out.println(map.getterritory_list());
+                map.add_dice_to_territory(joueurs);
+                //System.out.println(map.getterritory_list());
+                map.display_map_player(joueurs);
+        		asking=false;
+        	}
+        	else if(choice == 2) {
+        		asking=false;
+        		
+        		map = new map(NB_players, true);
+        	}
+        	
         }
-        map.add_dice_to_territory(joueurs);
-        System.out.println(map.getterritory_list());
-        //System.out.println("dé de renfor "+joueurs.get(0).getNb_R_dice()+" dé du joueur "+joueurs.get(0).getNb_dice());
-
-        map.display_map_player(joueurs);
-
 
         boolean Winner = false;
         int turns = 0;
