@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Game {
@@ -35,9 +36,6 @@ public class Game {
 
         }
 
-        //To display the list
-        //for (game.player player : joueurs) System.out.println(player);
-
         boolean asking = true;
         System.out.println("would you use a random map(1). Or a map build for a csv file(2) ?");
 
@@ -59,7 +57,7 @@ public class Game {
                 //System.out.println(map.getterritory_list());
                 map.display_map_player(joueurs);
         		asking=false;
-        		
+
         	}
         	else if(choice == 2) {
 
@@ -81,6 +79,11 @@ public class Game {
         boolean Winner = false;
         int turns = 0;
         int action ;
+
+        Collections.shuffle(joueurs); //randomize the orders
+
+        //To display the list
+        //for (game.player player : joueurs) System.out.println(player);
 
         while (!Winner){
 
