@@ -30,7 +30,7 @@ public class Game {
         //  Initialization of Players
         for (int i = 1; i <= NB_players; i++) {
 
-            System.out.print("Please enter a name for the player n°" + i + " : ");
+            System.out.print("Please enter a name for the player nÂ°" + i + " : ");
             String temp = sc.next();
             joueurs.add(new player(i, temp));
 
@@ -61,18 +61,44 @@ public class Game {
         	}
         	else if(choice == 2) {
 
-        		System.out.println("vous avez choisi une carte créer a partir d'un fichier csv soyez bien sur que votre map sois conforme a votre nombre de joueurs \nsi tous est bon taper 1 sinon taper 2 pour retourner au menu précédent");
+        		System.out.println("vous avez choisi une carte crÃ©er a partir d'un fichier csv soyez bien sur que votre map sois conforme a votre nombre de joueurs \nsi tous est bon tapez 1 sinon taper 2 pour retourner au menu prÃ©cÃ©dent");
         		int choice2 = sc.nextInt();
 
         		if(choice2==1) {
+        			
+        			System.out.println("veillez rentrer le nom du fichier svp: \n");
+        			
+        			String name ="src/game/"+ sc.next()+".csv";
+        			
+        			System.out.println("veillez rentrer la longeur de votre carte svp: \n");
+        			
+        			int x = sc.nextInt();
+        			
+        			System.out.println("veillez rentrer la largeur de votre carte svp: \n");
+        			
+        			int y = sc.nextInt();
 
-        			map = new map(NB_players, true);
+        			map = new map(NB_players, true,name,x,y);
+        			map.display_map();
+        			map.display_personal_map();
+        			
+        			map.add_player_to_territory(joueurs,true);
+        			
+        			//System.out.println(map.getterritory_list());
+
+                    map.add_dice_to_territory(joueurs);
+                    
+                    //System.out.println(map.getterritory_list());
+                    
+                    map.display_map_player(joueurs);
+        			
             		asking=false;
         			
         		}
+        		else {
 
         		System.out.println("would you use a random map(1). Or a map build for a csv file(2) ?");
-
+        		}
         	}
         }
 
