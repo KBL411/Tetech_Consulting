@@ -1,5 +1,6 @@
 package game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ public class Game {
 	
 	private static map map;
 	
-    public static void main(String [] args) {
+    public static void main(String [] args) throws IOException {
 
         // Input number of player
         Scanner sc = new Scanner(System.in);
