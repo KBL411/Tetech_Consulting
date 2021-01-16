@@ -131,11 +131,13 @@ public class Game {
 
                     if(action == 1 ){
 
-                        player.attackTerritory(player, map);
+                        player.attackTerritory(player, map,joueurs);
                         System.out.println(" ");
                         System.out.println("--------------------------THE NEW MAP---------------------------");
                         System.out.println(" ");
+                        
 
+                        map.display_map();
                         map.display_map_player(joueurs);
 
                     }
@@ -166,6 +168,7 @@ public class Game {
 
 
                         map.reinforcement_dice(player.getID(),joueurs);
+                        map.add_dice_to_territory(joueurs);
                         player.endTurn(turns);
 
                     }

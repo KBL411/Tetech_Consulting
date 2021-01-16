@@ -438,6 +438,7 @@ public class map {
 				for (territory t : this.territory_list) {
 					if (t.getId() == y && t.getNb_Dice() < 8) {
 						t.setNb_Dice(t.getNb_Dice() + 1);
+						System.out.println("One dice added to the territory "+t.getId()+" now it have "+t.getNb_Dice()+" dices");
 						cpt = cpt - 1;
 					}
 				}

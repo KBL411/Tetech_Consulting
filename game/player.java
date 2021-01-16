@@ -69,7 +69,7 @@ public class player {
 		Territories = new ArrayList<Integer>();
 	}
 	
-	public void attackTerritory(player p, map m) {
+	public void attackTerritory(player p, map m,ArrayList<player> ps) {
 
 		System.out.println("You Attack");
 
@@ -150,6 +150,13 @@ public class player {
 
 					}
 				}
+				
+				player player_def = null;
+				for (player pl : ps) {
+					if(pl.getID()== terr_def.getId_Player()) {
+						player_def=pl;
+					}
+				}
 
 				// 5. On récupere les nombres de dés des territoires et on fait un rolldice pour chaque
 				attack = rolldice(terr_att.getNb_Dice());
@@ -159,23 +166,33 @@ public class player {
 				if(attack > defense){
 					//attacker moves his dice to the conquered territory, except one that
 					//remains on the starting territory and the defeated dice of the opponent disappears
-
-					terr_def.setId_Player(terr_att.getId_Player()); //changer l'appartenance du territoire
-					terr_def.setNb_Dice(terr_att.getNb_Dice()-1);
-					terr_att.setNb_Dice(1);
+					System.out.println(m.getterritory_list().get(m.getterritory_list().indexOf(terr_def)));
+					m.getterritory_list().get(m.getterritory_list().indexOf(terr_def)).setId_Player(terr_att.getId_Player());//changer l'appartenance du territoire
+					System.out.println(m.getterritory_list().get(m.getterritory_list().indexOf(terr_def)));
+					System.out.println(ps.get(ps.indexOf(p)).getTerritories());
+					p.getTerritories().add(terr_def.getId());
+					System.out.println(ps.get(ps.indexOf(p)).getTerritories());
+					
+					System.out.println(ps.get(ps.indexOf(player_def)).getTerritories());
+					player_def.getTerritories().remove(player_def.getTerritories().indexOf(terr_def.getId()));
+					System.out.println(ps.get(ps.indexOf(player_def)).getTerritories());
+					
+					m.getterritory_list().get(m.getterritory_list().indexOf(terr_def)).setNb_Dice(terr_att.getNb_Dice()-1);
+					
+					m.getterritory_list().get(m.getterritory_list().indexOf(terr_att)).setNb_Dice(1);
 
 					System.out.println("Attack succeed,  Score : " + attack + " / " + defense);
 					System.out.println(" ");
 
 				}else if (attack < defense){
 					// (attacker) only keeps one die in his territory and the attacked territory remains unchanged
-					terr_att.setNb_Dice(1);
+					m.getterritory_list().get(m.getterritory_list().indexOf(terr_att)).setNb_Dice(1);
 					System.out.println("Attack failed,  Score : " + attack + " / " + defense);
 					System.out.println(" ");
 
 				}else{
-					terr_att.setNb_Dice(1);
-					terr_def.setNb_Dice(1);
+					m.getterritory_list().get(m.getterritory_list().indexOf(terr_att)).setNb_Dice(1);
+					m.getterritory_list().get(m.getterritory_list().indexOf(terr_def)).setNb_Dice(1);
 					System.out.println("It's a draw, Score : " + attack + " / " + defense);
 					System.out.println(" ");
 
