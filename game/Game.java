@@ -15,7 +15,7 @@ public class Game {
         int NB_players = sc.nextInt();
 
         // Checking
-        while(NB_players > 8 || NB_players < 1){
+        while(NB_players > 8 || NB_players < 2){
 
             System.out.println(" ");System.out.println("Invalid number of players");
             System.out.print("Please enter a valid number of players : ");
@@ -37,9 +37,12 @@ public class Game {
 
         //To display the list
         //for (game.player player : joueurs) System.out.println(player);
+
         boolean asking = true;
         System.out.println("would you use a random map(1). Or a map build for a csv file(2) ?");
+
         while(asking) {
+
         	int choice = sc.nextInt();
         	if(choice == 1) {
 
@@ -56,21 +59,23 @@ public class Game {
                 //System.out.println(map.getterritory_list());
                 map.display_map_player(joueurs);
         		asking=false;
+        		
         	}
         	else if(choice == 2) {
+
         		System.out.println("vous avez choisi une carte créer a partir d'un fichier csv soyez bien sur que votre map sois conforme a votre nombre de joueurs \nsi tous est bon taper 1 sinon taper 2 pour retourner au menu précédent");
         		int choice2 = sc.nextInt();
+
         		if(choice2==1) {
+
         			map = new map(NB_players, true);
             		asking=false;
         			
         		}
+
         		System.out.println("would you use a random map(1). Or a map build for a csv file(2) ?");
-        		
-        		
-        		
+
         	}
-        	
         }
 
         boolean Winner = false;
@@ -106,6 +111,26 @@ public class Game {
                     }
                     else if(action == 2 ){
 
+                        //When a player end his turn we verify that he is not the winner
+
+                        for(int i = 0 ; i < map.getterritory_list().size(); i++){
+                            int w1,w2;
+
+                            territory temp_terr1 = map.getterritory_list().get(0);
+                            w1 =  temp_terr1.getId_Player();
+
+                            territory temp_terr2 = map.getterritory_list().get(i);
+                            w2 =  temp_terr2.getId_Player();
+
+                            if( w1 != w2) break; //if we discover their is 2 player that has territories
+                            else {
+
+                                // if their is just one player that has territories we set winner to true
+                                Winner = true;
+                                System.out.println(" ");System.out.println("Invalid selection");
+
+                            }
+                        }
                         player.endTurn(turns);
 
                     }
@@ -119,6 +144,15 @@ public class Game {
 
                     }
                 }
+
+
+            }
+
+            // We verify if their is a winner before another starting another turns
+            if (Winner) {
+                System.out.println("The game end in " + turns + "turns");
+                System.out.println("-------------------------END OF THE GAME-------------------------");
+                System.exit(1);
             }
             turns++;
             System.out.println(" ");

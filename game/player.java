@@ -126,9 +126,11 @@ public class player {
 			int attack, defense;
 
 			if(att_neighb.isEmpty()){ // Si il n'y a pas d'attaque possible on ne propose meme pas la selection
+
 				System.out.println(" ");
 				System.out.print("No territories can be attack from here");
 				System.out.println(" ");
+
 			}else {
 				do{
 
