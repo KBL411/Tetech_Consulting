@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1936d326-a94f-4a82-b056-b44faf378526" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/player.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tetech_Consulting/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tetech_Consulting/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tetech_Consulting/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tetech_Consulting/game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tetech_Consulting/game/map.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tetech_Consulting/game/map.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tetech_Consulting/game/player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tetech_Consulting/game/player.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1n9xGUAqV0MSLQA69UXic08O4tR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
   <component name="RunManager">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="game.Game" />
@@ -19,5 +49,43 @@
         <item itemvalue="Application.Game" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1936d326-a94f-4a82-b056-b44faf378526" name="Default Changelist" comment="" />
+      <created>1610816011382</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610816011382</updated>
+      <workItem from="1610816013552" duration="3175000" />
+      <workItem from="1610822711046" duration="2830000" />
+      <workItem from="1610832849407" duration="1265000" />
+      <workItem from="1610886940551" duration="2357000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1237" height="145" key="GridCell.Tab.0.bottom" timestamp="1610889819619">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="145" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1610889819619" />
+    <state width="1237" height="145" key="GridCell.Tab.0.center" timestamp="1610889819619">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="145" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1610889819619" />
+    <state width="1237" height="145" key="GridCell.Tab.0.left" timestamp="1610889819619">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="145" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1610889819619" />
+    <state width="1237" height="145" key="GridCell.Tab.0.right" timestamp="1610889819619">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="145" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1610889819619" />
   </component>
 </project>

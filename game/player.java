@@ -201,10 +201,10 @@ public class player {
 					System.out.println(" ");
 
 				}
-
 				// 7. Display the new map (in the Game/Main file)
 			}
 		}
+		//choice.close();
 	}
 	
 	public int rolldice(int Nb_dice) {
