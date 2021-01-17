@@ -214,15 +214,17 @@ public class Game {
                         //When a player end his turn we verify that he is not the winner
 
                         for(int i = 0 ; i < map.getterritory_list().size(); i++){
+
                             int w1,w2;
                             Winner = false;
+
                             territory temp_terr1 = map.getterritory_list().get(0);
                             w1 =  temp_terr1.getId_Player();
 
                             territory temp_terr2 = map.getterritory_list().get(i);
                             w2 =  temp_terr2.getId_Player();
 
-                            if( w1 != w2) break;//if we discover their is 2 player that has territories
+                            if( w1 != w2) break;//if we discover their is 2 player that has territories we break the loop
 
                             Winner = true; // if their is just one player that has territories we pass the break & set winner to true
 
@@ -245,6 +247,7 @@ public class Game {
                 }
             }
             System.out.println(Winner);
+
             // We verify if their is a winner before another starting another turns
             if (Winner) {
 
@@ -262,5 +265,4 @@ public class Game {
 
         }
     }
-
 }
