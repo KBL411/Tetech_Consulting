@@ -3,6 +3,7 @@ package game;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
@@ -13,8 +14,27 @@ public class Game {
 
         // Input number of player
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a number of Player for your DiceWars game : ");
-        int NB_players = sc.nextInt();
+
+        boolean erreur;
+        int NB_players = 0;
+
+        // ca fait une boucle infini
+        do {
+
+            erreur = false;
+
+            try {
+                System.out.print("Enter a number of Player for your DiceWars game : ");
+                NB_players = sc.nextInt();
+
+            } catch (InputMismatchException e) {
+
+                erreur = true;
+
+            }
+
+        } while (erreur);
+
 
         // Checking
         while(NB_players > 8 || NB_players < 2){
@@ -187,6 +207,7 @@ public class Game {
             // We verify if their is a winner before another starting another turns
             if (Winner) {
 
+                sc.close();
                 System.out.println("The game end in " + turns + "turns");
                 System.out.println("-------------------------END OF THE GAME-------------------------");
                 System.exit(1);
@@ -200,4 +221,5 @@ public class Game {
 
         }
     }
+
 }
