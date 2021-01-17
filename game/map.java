@@ -96,7 +96,7 @@ public class map {
 					matrix[i][j] = -1;
 					cpt = cpt + 1;
 				} else {
-					cpt = cpt + 1; // we had a différent numbre for each teritory
+					cpt = cpt + 1; // we had a diffÃ©rent numbre for each teritory
 					matrix[i][j] = cpt;
 				}
 			}
@@ -263,7 +263,7 @@ public class map {
 		int cpt = 0;
 		for (int i = 0; i <= matrix.length - 1; i++) {
 			for (int j = 0; j <= matrix.length - 1; j++) {
-				cpt = cpt + 1; // wa hade a différent numbre for each teritory
+				cpt = cpt + 1; // wa hade a diffÃ©rent numbre for each teritory
 				matrix[i][j] = cpt;
 			}
 		}
@@ -418,7 +418,7 @@ public class map {
 	public void add_player_to_territory(ArrayList<player> players, boolean bool) {
 
 		// faire un parcour de la matrice et du fichier csv associer le territoire a son
-		// propriétaire
+		// propriÃ©taire
 
 		for (player p : players) {
 			int cpt = 0;
@@ -442,7 +442,7 @@ public class map {
 			}
 
 		}
-		System.out.println("\njoueur placé sur la map\n");
+		System.out.println("\njoueur placÃ© sur la map\n");
 
 	}
 
@@ -515,7 +515,7 @@ public class map {
 			}
 		}
 		p.get(id_player - 1).setNb_R_dice(Nb_RDice);
-		System.out.println("les dés de renforcement sont au nombre de " + Nb_RDice);
+		System.out.println("les dÃ©s de renforcement sont au nombre de " + Nb_RDice);
 	}
 
 	public void reinforcement_dice(int id_player, ArrayList<player> players) {
@@ -536,7 +536,7 @@ public class map {
 			} // if not we call neighbor methode
 		}
 
-		System.out.println("les dés de renfore sont au nombre de: " + Collections.max(this.renfor)); // we take the
+		System.out.println("les dÃ©s de renfore sont au nombre de: " + Collections.max(this.renfor)); // we take the
 																										// maximum of
 																										// renfor and
 																										// this is the
@@ -609,6 +609,36 @@ public class map {
 		System.out.println(matrix);
 	}
 
+	public void display_map_dice() {// in order to display the map
+		String matrix = "	matrice des territoires	et leur power  \n";
+		int cpt=0;
+		for (int i = 0; i < this.matrix.length; i++) {
+			for (int j = 0; j < this.matrix.length; j++) {
+
+				if (j != this.matrix.length - 1) {
+
+					if (this.matrix[i][j] != -1) {
+						matrix = matrix + " " + this.matrix[i][j] +" dice: "+this.getterritory_list().get(this.matrix[i][j]-1-cpt).getNb_Dice()+ " || ";
+
+					} else {
+						matrix = matrix + this.matrix[i][j]+" dice: 0" + " || ";
+						cpt=cpt+1;
+					}
+
+				}
+
+				else {
+
+					matrix = matrix + this.matrix[i][j]+" dice: "+this.getterritory_list().get(this.matrix[i][j]-1-cpt).getNb_Dice()+ " || ";
+				}
+
+			}
+			matrix = matrix + "\n										\n";
+		}
+
+		System.out.println(matrix);
+	}
+
 	public void display_personal_map() {// in order to display the map
 		String matrix = "	matrice perso	  \n";
 		for (int i = 0; i < this.personal_map.length; i++) {
@@ -639,22 +669,30 @@ public class map {
 
 	public void display_map_player(ArrayList<player> players) { // we display the matrix but we replace the id of the
 																// territory by the id of the owner
-		String matrix = "	teritoires des joueurs   \n";
+		String matrix = "	matrice des joueurs	et leur power  \n";
+		int cpt=0;
 		for (int i = 0; i < this.matrix.length; i++) {
 			for (int j = 0; j < this.matrix.length; j++) {
-				for (player p : players)
-					if (p.getTerritories().contains(this.matrix[i][j])) {
-						matrix = matrix + " " + p.getID() + " || ";
-						this.matrix_player[i][j] = p.getID();
+
+				if (j != this.matrix.length - 1) {
+
+					if (this.matrix[i][j] != -1) {
+						matrix = matrix + " " + this.getterritory_list().get(this.matrix[i][j]-1-cpt).getId_Player() +" dice: "+this.getterritory_list().get(this.matrix[i][j]-1-cpt).getNb_Dice()+ " || ";
+
+					} else {
+						matrix = matrix + " Ã˜ Ã˜  Ã˜ Ã˜ " + " || ";
+						cpt=cpt+1;
 					}
 
-				if (this.matrix[i][j] == -1) {
-					matrix = matrix + " Ø || ";
-					this.matrix_player[i][j] = -1;
+				}
+
+				else {
+
+					matrix = matrix + this.getterritory_list().get(this.matrix[i][j]-1-cpt).getId_Player() +" dice: "+this.getterritory_list().get(this.matrix[i][j]-1-cpt).getNb_Dice()+ " || ";
 				}
 
 			}
-			matrix = matrix + "\n------------------------------\n";
+			matrix = matrix + "\n										\n";
 		}
 
 		System.out.println(matrix);
