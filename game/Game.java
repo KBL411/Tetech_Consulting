@@ -205,7 +205,7 @@ public class Game {
                         System.out.println(" ");
                         
 
-                        map.display_map();
+                        map.display_map_dice();
                         map.display_map_player(joueurs);
 
                     }
