@@ -15,35 +15,51 @@ public class Game {
         // Input number of player
         Scanner sc = new Scanner(System.in);
 
-        boolean erreur;
+        boolean erreur ;
         int NB_players = 0;
 
-        // ca fait une boucle infini
-        do {
+        System.out.print("Enter a number of Player for your DiceWars game : ");
 
-            erreur = false;
+        // Checking the input type
+        while (sc.hasNext()) {
 
-            try {
-                System.out.print("Enter a number of Player for your DiceWars game : ");
+            if (sc.hasNextInt()) {
+
                 NB_players = sc.nextInt();
-
-            } catch (InputMismatchException e) {
-
-                erreur = true;
+                break;
 
             }
 
-        } while (erreur);
+            sc.next();
+            System.out.println(" "); System.out.println("Invalid input type");
+            System.out.print("Please, enter a INTEGER for the number of players : ");
+        }
 
 
-        // Checking
+        // Checking the number of player
         while(NB_players > 8 || NB_players < 2){
 
             System.out.println(" ");System.out.println("Invalid number of players");
             System.out.print("Please enter a valid number of players : ");
-            NB_players = sc.nextInt();
+
+            // Checking the input type
+            while (sc.hasNext()) {
+
+                if (sc.hasNextInt()) {
+
+                    NB_players = sc.nextInt();
+                    break;
+
+                }
+
+                sc.next();
+                System.out.println(" "); System.out.println("Invalid input type");
+                System.out.print("Please, enter a INTEGER for the number of players : ");
+            }
 
         }
+
+        System.out.println(" "); System.out.println("Thank you, the game can start now");
 
         // List of players
         ArrayList<player> joueurs = new ArrayList<player>();
@@ -62,7 +78,24 @@ public class Game {
 
         while(asking) {
 
-        	int choice = sc.nextInt();
+        	int choice = 0;
+
+            // Checking the input type
+            while (sc.hasNext()) {
+
+                if (sc.hasNextInt()) {
+
+                    choice = sc.nextInt();
+                    break;
+
+                }
+
+                sc.next();
+                System.out.println(" "); System.out.println("Invalid input type");
+                System.out.print("Please, enter a INTEGER for your choice : ");
+
+            }
+
         	if(choice == 1) {
 
                 //  Initialization of the map
@@ -83,7 +116,22 @@ public class Game {
         	else if(choice == 2) {
 
         		System.out.println("vous avez choisi une carte créer a partir d'un fichier csv soyez bien sur que votre map sois conforme a votre nombre de joueurs \nsi tous est bon tapez 1 sinon taper 2 pour retourner au menu précédent");
-        		int choice2 = sc.nextInt();
+        		int choice2 = 0;
+
+                // Checking the input type
+                while (sc.hasNext()) {
+
+                    if (sc.hasNextInt()) {
+
+                        choice2 = sc.nextInt();
+                        break;
+
+                    }
+
+                    sc.next();
+                    System.out.println(" "); System.out.println("Invalid input type");
+                    System.out.print("Please, enter a INTEGER for your choice : ");
+                }
 
         		if(choice2==1) {
         			
@@ -174,18 +222,11 @@ public class Game {
                             territory temp_terr2 = map.getterritory_list().get(i);
                             w2 =  temp_terr2.getId_Player();
 
-                            System.out.println("w1 : " + w1);
-                            System.out.println("w2 : " + w2);
+                            if( w1 != w2) break;//if we discover their is 2 player that has territories
 
-                            if( w1 != w2) break; //if we discover their is 2 player that has territories
-                            // if their is just one player that has territories we pass the break & set winner to true
-                            Winner = true;
-                            System.out.println(" ");System.out.println("We find a winner");
+                            Winner = true; // if their is just one player that has territories we pass the break & set winner to true
+
                         }
-
-
-
-
 
                         map.reinforcement_dice2(player.getID(),joueurs);
                         map.add_dice_to_territory(joueurs);

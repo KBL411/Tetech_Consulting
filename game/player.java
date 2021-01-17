@@ -91,7 +91,21 @@ public class player {
 		do{
 
 			System.out.print("With wich territory do you want to make an attack :");
-			temp = choice.nextInt();
+
+			// Checking the input type
+			while (choice.hasNext()) {
+
+				if (choice.hasNextInt()) {
+
+					temp = choice.nextInt();
+					break;
+
+				}
+
+				choice.next();
+				System.out.println(" "); System.out.println("Invalid input type");
+				System.out.print("Please, enter a INTEGER for your choice : ");
+			}
 
 		}while(!p.getTerritories().contains(temp));// tant que le territoire choisi appartient bien a la liste
 
@@ -116,7 +130,7 @@ public class player {
 
 		}else {
 
-			// 3. liste territoire adjacent au territoire attaquant selectionné
+			// 3. liste territoire adjacent au territoire attaquant selectionne
 			System.out.println(" ");
 			System.out.println("Below the territories that you can attack from your chosen territory");
 			ArrayList<Integer> att_neighb = terr_att.getNeighboring_Territories(); // Neighbors - Our territories
@@ -124,7 +138,7 @@ public class player {
 			System.out.println(att_neighb);
 
 
-			// 4. Choix du territoire attaqué
+			// 4. Choix du territoire attaque
 			temp = 0;
 			territory terr_def = null;
 			int attack, defense;
@@ -139,7 +153,20 @@ public class player {
 				do{
 
 					System.out.print("With which territory do you want to attack :");
-					temp = choice.nextInt();
+					// Checking the input type
+					while (choice.hasNext()) {
+
+						if (choice.hasNextInt()) {
+
+							temp = choice.nextInt();
+							break;
+
+						}
+
+						choice.next();
+						System.out.println(" "); System.out.println("Invalid input type");
+						System.out.print("Please, enter a INTEGER for your choice : ");
+					}
 
 				}while(!att_neighb.contains(temp)); // tant que le territoire choisi appartient bien a la liste
 
