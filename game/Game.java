@@ -71,15 +71,15 @@ public class Game {
         			
         			String name ="src/game/"+ sc.next()+".csv";
         			
-        			System.out.println("veillez rentrer la longeur de votre carte svp: \n");
+        			/*System.out.println("veillez rentrer la longeur de votre carte svp: \n");
         			
         			int x = sc.nextInt();
         			
         			System.out.println("veillez rentrer la largeur de votre carte svp: \n");
         			
-        			int y = sc.nextInt();
+        			int y = sc.nextInt();*/
 
-        			map = new map(NB_players, true,name,x,y);
+        			map = new map(NB_players, true,name);
         			map.display_map();
         			map.display_personal_map();
         			
@@ -167,7 +167,7 @@ public class Game {
 
 
 
-                        map.reinforcement_dice(player.getID(),joueurs);
+                        map.reinforcement_dice2(player.getID(),joueurs);
                         map.add_dice_to_territory(joueurs);
                         player.endTurn(turns);
 

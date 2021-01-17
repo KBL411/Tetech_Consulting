@@ -74,10 +74,14 @@ public class player {
 		System.out.println("You Attack");
 
 		// 1. liste de tous les territoire du joueur
-		System.out.println(" ");
-		System.out.println("Below your territories");
-		System.out.println(p.getTerritories());
-		System.out.println(" ");
+		String power ="";
+		
+		for(territory t : m.getterritory_list()) {
+			if(p.getTerritories().contains(t.getId())) {
+				power =power+"territoire n° "+t.getId()+"|| NB of dice "+t.getNb_Dice()+"\n";
+			}
+		}
+		System.out.println(power);
 
 		// 2. choix du territoire attaquant
 		Scanner choice = new Scanner(System.in);

@@ -18,6 +18,8 @@ public class map {
 	// store the player
 
 	private int[][] personal_map;
+	private int personal_L;
+	private int personal_l;
 
 	private int[][] matrix;// in order to store the shape of the map
 
@@ -28,21 +30,42 @@ public class map {
 	private ArrayList<Integer> renfor = new ArrayList<Integer>();
 	private ArrayList<territory> already = new ArrayList<territory>();
 
-	public void creat_map_csv(String filepath, int i, int j) throws IOException {
+	public void creat_map_csv(String filepath, int nb_player) throws IOException {
 
 		try {
 			File csvFile = new File(filepath); // gets the file at the path
-			this.personal_map = new int[i][j];
+
 			if (csvFile.isFile()) {
 				BufferedReader csvReader = new BufferedReader(new FileReader(filepath));
 				String row;
 				int y = 0;
+				
 				while ((row = csvReader.readLine()) != null) {
 					String[] data = row.split(";");
-					for (int x = 0; x < 10; x++) {
-						this.personal_map[x][y] = Integer.parseInt(data[x]);
+					if (y >= 2) {
+						for (int x = 0; x <= this.personal_l-1; x++) {
+							//System.out.println("hauteur"+ this.personal_map.length+" largeur "+this.personal_map[0].length+ " y "+y);
+							
+							int z= Integer.parseInt(data[x]);
+							
+							//System.out.println(this.personal_map[y-2][x]);
+							if(z<=nb_player) {
+								//System.out.println(" y "+(y-3)+"x "+x+" z "+z);
+							this.personal_map[y-3][x] = z;}
+						}
+						y++;
 					}
-					y++;
+					if(y==0) {
+						this.personal_L=Integer.parseInt(data[0]);
+						//System.out.println("y ="+y+" "+this.personal_L);
+						y++;
+					}
+					if(y==1) {
+						this.personal_l=Integer.parseInt(data[0]);
+						//System.out.println("y ="+y+" "+this.personal_l);
+						this.personal_map = new int[this.personal_L][this.personal_l];
+						y++;
+					}
 				}
 				csvReader.close();
 			} else {
@@ -61,8 +84,8 @@ public class map {
 		}
 	}
 
-	public map(int nb_player, boolean bool, String filepath, int L, int l) throws IOException {
-		this.creat_map_csv(filepath, L, l);
+	public map(int nb_player, boolean bool, String filepath) throws IOException {
+		this.creat_map_csv(filepath, nb_player);
 		this.matrix = new int[this.personal_map.length][this.personal_map[0].length];
 		this.matrix_player = new int[this.personal_map.length][this.personal_map[0].length];
 
@@ -396,21 +419,23 @@ public class map {
 
 		// faire un parcour de la matrice et du fichier csv associer le territoire a son
 		// propriétaire
-		
+
 		for (player p : players) {
-			int cpt=0;
+			int cpt = 0;
 			for (int i = 0; i <= matrix.length - 1; i++) {
 				for (int j = 0; j <= matrix[0].length - 1; j++) {
-					//System.out.println("id player "+p.getID()+" this personal map "+this.personal_map[i][j]+" matrix "+this.matrix[i][j]);
-					if(p.getID()==this.personal_map[i][j]) {
-						
-						this.territory_list.get(this.matrix[i][j]-1-cpt).setId_Player(p.getID());
+					// System.out.println("id player "+p.getID()+" this personal map
+					// "+this.personal_map[i][j]+" matrix "+this.matrix[i][j]);
+					if (p.getID() == this.personal_map[i][j]) {
+
+						this.territory_list.get(this.matrix[i][j] - 1 - cpt).setId_Player(p.getID());
 						ArrayList<Integer> change = p.getTerritories();
-						change.add(this.territory_list.get(this.matrix[i][j]-1-cpt).getId());
+						change.add(this.territory_list.get(this.matrix[i][j] - 1 - cpt).getId());
 						p.setTerritories(change);
-						
+
+					} else if (this.personal_map[i][j] == -1) {
+						cpt = cpt + 1;
 					}
-					else if(this.personal_map[i][j]==-1) {cpt=cpt+1;}
 
 				}
 
@@ -438,7 +463,8 @@ public class map {
 				for (territory t : this.territory_list) {
 					if (t.getId() == y && t.getNb_Dice() < 8) {
 						t.setNb_Dice(t.getNb_Dice() + 1);
-						System.out.println("One dice added to the territory "+t.getId()+" now it have "+t.getNb_Dice()+" dices");
+						System.out.println("One dice added to the territory " + t.getId() + " now it have "
+								+ t.getNb_Dice() + " dices");
 						cpt = cpt - 1;
 					}
 				}
@@ -448,6 +474,48 @@ public class map {
 			p.setNb_R_dice(0);
 		}
 
+	}
+
+	public int reinforcement_dice_calc(ArrayList<Integer> x, territory T) {
+		x.removeIf(n -> (n == T.getId()));
+		int ret = 1;
+		for (int j = 0; j < x.size(); j++) {
+			for (Integer neighbor : T.getNeighboring_Territories()) {
+				if (x.isEmpty() || x.size() >= j) {
+					break;
+				} else if (x.get(j) == neighbor) {
+					for (int i = 0; i < this.territory_list.size(); i++) {
+						if (this.territory_list.get(i).getId() == x.get(j)) {
+							ret += reinforcement_dice_calc(x, this.territory_list.get(i));
+							break;
+						}
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
+	public void reinforcement_dice2(int id_player, ArrayList<player> p) {
+		ArrayList<Integer> x = (ArrayList<Integer>) p.get(id_player - 1).getTerritories().clone();
+		int Nb_RDice = 0;
+		while (!x.isEmpty()) {
+			territory T = null;
+			for (int i = 0; i < this.territory_list.size(); i++) {
+				if (this.territory_list.get(i).getId() == x.get(0)) {
+					T = this.territory_list.get(i);
+					break;
+				}
+			}
+
+			if (T != null) {
+				int NbTer = reinforcement_dice_calc(x, T);
+				if (NbTer > Nb_RDice)
+					Nb_RDice = NbTer;
+			}
+		}
+		p.get(id_player - 1).setNb_R_dice(Nb_RDice);
+		System.out.println("les dés de renforcement sont au nombre de " + Nb_RDice);
 	}
 
 	public void reinforcement_dice(int id_player, ArrayList<player> players) {
@@ -540,7 +608,7 @@ public class map {
 
 		System.out.println(matrix);
 	}
-	
+
 	public void display_personal_map() {// in order to display the map
 		String matrix = "	matrice perso	  \n";
 		for (int i = 0; i < this.personal_map.length; i++) {
@@ -568,7 +636,6 @@ public class map {
 
 		System.out.println(matrix);
 	}
-
 
 	public void display_map_player(ArrayList<player> players) { // we display the matrix but we replace the id of the
 																// territory by the id of the owner
